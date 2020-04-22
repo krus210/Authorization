@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Authorization</string>
+    <string name="username">Enter username</string>
+    <string name="password">Enter password</string>
+    <string name="log_in">Log in</string>
+    <string name="registration">Registration</string>
+    <string name="empty">Empty username or password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="registration_activity_name">Registration</string>
+    <string name="passwords_not_equal">Passwords not equal</string>
+    <string name="token_key">TOKEN_KEY</string>
+    <string name="shared_pref">SHARED_PREF</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="registration_successful">Registration successful</string>
+    <string name="authorization_successful">Authorization successful</string>
+    <string name="authorization_failed">Authorization failed</string>
+    <string name="feed_activity_name">Feed</string>
+</resources>

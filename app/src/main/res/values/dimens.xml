@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_padding">80dp</dimen>
+    <dimen name="view_margin_bottom">10dp</dimen>
+    <dimen name="elevation">10dp</dimen>
+</resources>
