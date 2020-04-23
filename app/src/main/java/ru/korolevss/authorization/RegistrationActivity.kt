@@ -25,7 +25,7 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                 Toast.makeText(this, R.string.passwords_not_equal, Toast.LENGTH_SHORT).show()
             } else {
                 launch{
-                    determinateBarRegistration.visibility = View.VISIBLE
+                    switchDeterminateBar(true)
                     val response = Repository.signIn(username, password1)
                     if (response.isSuccessful) {
                         val token: Token? = response.body()
@@ -43,15 +43,19 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    determinateBarRegistration.visibility = View.GONE
+                    switchDeterminateBar(false)
                 }
             }
         }
-
     }
 
-    override fun onStop() {
-        super.onStop()
-        cancel()
+    private fun switchDeterminateBar(isLaunch: Boolean) {
+        if (isLaunch) {
+            determinateBarRegistration.visibility = View.VISIBLE
+            signInButton.isEnabled = false
+        } else {
+            determinateBarRegistration.visibility = View.GONE
+            signInButton.isEnabled = true
+        }
     }
 }

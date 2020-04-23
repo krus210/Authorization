@@ -1,5 +1,6 @@
 package ru.korolevss.authorization
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        isAuthorized(this)
+        startActivityIfAuthorized()
 
         logInButton.setOnClickListener {
             val username = usernameEditText.text.toString()
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                 Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show()
             } else {
                 launch {
-                    determinateBarMain.visibility = View.VISIBLE
+                    switchDeterminateBar(true)
                     val response = Repository.authenticate(username, password)
                     if (response.isSuccessful) {
                         val token: Token? = response.body()
@@ -46,24 +47,39 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    determinateBarMain.visibility = View.GONE
+                    switchDeterminateBar(false)
                 }
             }
         }
 
         registrationButton.setOnClickListener {
-            val intent = Intent(this@MainActivity, RegistrationActivity::class.java)
+            val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        isAuthorized(this)
+        startActivityIfAuthorized()
     }
 
-    override fun onStop() {
-        super.onStop()
-        cancel()
+    private fun startActivityIfAuthorized() {
+        if (isAuthorized(this)) {
+            val intent = Intent(this, FeedActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+    private fun switchDeterminateBar(isLaunch: Boolean) {
+        if (isLaunch) {
+            determinateBarMain.visibility = View.VISIBLE
+            logInButton.isEnabled = false
+            registrationButton.isEnabled = false
+        } else {
+            determinateBarMain.visibility = View.GONE
+            logInButton.isEnabled = true
+            registrationButton.isEnabled = true
+        }
+    }
+
 }
