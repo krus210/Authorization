@@ -1,6 +1,7 @@
 package ru.korolevss.authorization
 
 import android.content.Context
+import androidx.core.content.edit
 import ru.korolevss.authorization.api.Token
 
 
@@ -12,12 +13,11 @@ fun savedToken(token: Token?, context: Context) {
         sharedPrefKey,
         Context.MODE_PRIVATE
     )
-    with(sharedPref.edit()) {
+    sharedPref.edit {
         putString(
             tokenKey,
             token?.token
         )
-        commit()
     }
 }
 

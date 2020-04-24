@@ -9,5 +9,5 @@ interface API {
     suspend fun authenticate(@Body authRequestParams: AuthRequestParams): Response<Token>
 
     @POST("api/v1/registration")
-    suspend fun signIn(@Body authRequestParams: AuthRequestParams): Response<Token>
+    suspend fun signUp(@Body authRequestParams: AuthRequestParams): Response<Token>
 }

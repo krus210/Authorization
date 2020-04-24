@@ -22,7 +22,7 @@ object Repository {
     suspend fun authenticate(login: String, password: String) =
         api.authenticate(AuthRequestParams(login, password))
 
-    suspend fun signIn(login: String, password: String) =
-        api.signIn(AuthRequestParams(login, password))
+    suspend fun signUp(login: String, password: String) =
+        api.signUp(AuthRequestParams(login, password))
 
 }

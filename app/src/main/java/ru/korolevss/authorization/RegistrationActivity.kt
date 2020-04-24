@@ -2,20 +2,20 @@ package ru.korolevss.authorization
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.coroutines.*
 import ru.korolevss.authorization.api.Token
 
-class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+class RegistrationActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
-        signInButton.setOnClickListener {
+        signUpButton.setOnClickListener {
             val username = usernameRegistrationEditText.text.toString()
             val password1 = password1RegistrationEditText.text.toString()
             val password2 = password2RegistrationEditText.text.toString()
@@ -24,9 +24,9 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
             } else if (password1 != password2) {
                 Toast.makeText(this, R.string.passwords_not_equal, Toast.LENGTH_SHORT).show()
             } else {
-                launch{
+                lifecycleScope.launch{
                     switchDeterminateBar(true)
-                    val response = Repository.signIn(username, password1)
+                    val response = Repository.signUp(username, password1)
                     if (response.isSuccessful) {
                         val token: Token? = response.body()
                         savedToken(token, this@RegistrationActivity)
@@ -51,11 +51,11 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
 
     private fun switchDeterminateBar(isLaunch: Boolean) {
         if (isLaunch) {
-            determinateBarRegistration.visibility = View.VISIBLE
-            signInButton.isEnabled = false
+            determinateBarRegistration.isVisible = true
+            signUpButton.isEnabled = false
         } else {
-            determinateBarRegistration.visibility = View.GONE
-            signInButton.isEnabled = true
+            determinateBarRegistration.isVisible = false
+            signUpButton.isEnabled = true
         }
     }
 }

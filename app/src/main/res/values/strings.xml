@@ -6,7 +6,7 @@
     <string name="registration">Registration</string>
     <string name="empty">Empty username or password</string>
     <string name="repeat_password">Repeat password</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
     <string name="registration_activity_name">Registration</string>
     <string name="passwords_not_equal">Passwords not equal</string>
     <string name="registration_failed">Registration failed</string>

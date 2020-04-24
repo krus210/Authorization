@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import ru.korolevss.authorization.api.Token
 
-class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
             if (username == "" || password == "") {
                 Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show()
             } else {
-                launch {
+                lifecycleScope.launch {
                     switchDeterminateBar(true)
                     val response = Repository.authenticate(username, password)
                     if (response.isSuccessful) {
@@ -72,13 +74,13 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
     private fun switchDeterminateBar(isLaunch: Boolean) {
         if (isLaunch) {
-            determinateBarMain.visibility = View.VISIBLE
+            determinateBarMain.isVisible = true
             logInButton.isEnabled = false
             registrationButton.isEnabled = false
         } else {
             determinateBarMain.visibility = View.GONE
             logInButton.isEnabled = true
-            registrationButton.isEnabled = true
+            determinateBarMain.isVisible = false
         }
     }
 
