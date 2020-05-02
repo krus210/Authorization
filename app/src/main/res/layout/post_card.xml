@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/standard_margin"
+    android:padding="@dimen/standard_margin"
+    android:background="@color/colorBackgroundPostCard">
+
+    <ImageView
+        android:id="@+id/imageViewAvatar"
+        android:layout_width="@dimen/size_icon"
+        android:layout_height="@dimen/size_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_android"/>
+
+    <TextView
+        android:id="@+id/textViewPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_beyond_text_and_avatar_photo"
+        android:textColor="@color/colorTextOfPost"
+        android:textSize="@dimen/size_text_of_post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar"
+        tools:text="@string/text_of_post" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextOfDate"
+        android:textSize="@dimen/size_date"
+        android:layout_marginStart="@dimen/standard_margin"
+        app:layout_constraintStart_toEndOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        tools:text="@string/date" />
+
+    <TextView
+        android:id="@+id/textViewAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/margin_between_date_and_name_author"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorTextOfAuthor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageViewAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDate"
+        tools:text="@string/netology" />
+
+    <ImageButton
+        android:id="@+id/imageButtonShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_share_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        android:layout_marginTop="@dimen/standard_margin"/>
+
+    <TextView
+        android:id="@+id/textViewRepostCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonShare"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/margin_gap_between_icons"
+        tools:text="@string/eight" />
+
+    <ImageButton
+        android:id="@+id/imageButtonRepost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_reply_gray"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/margin_between_text_and_icon"
+        app:layout_constraintEnd_toStartOf="@+id/textViewRepostCount"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink" />
+
+    <TextView
+        android:id="@+id/textViewLikeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/margin_gap_between_icons"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonRepost"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        tools:text="@string/fifty"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_like_gray"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/margin_between_text_and_icon"
+        app:layout_constraintEnd_toStartOf="@+id/textViewLikeCount"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink" />
+
+    <ImageButton
+        android:id="@+id/imageButtonLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_location_on_black_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonLike"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/margin_gap_between_icons"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/textViewSnippet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/margin_between_text_and_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageViewAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAuthor"
+        tools:text="@string/snippet"
+        android:visibility="invisible"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPost"
+        android:layout_marginTop="@dimen/margin_between_text_and_icon"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textViewDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/delete"
+        android:textSize="@dimen/size_date"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButtonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_delete"
+        android:layout_marginEnd="@dimen/margin_between_text_and_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDelete"
+        app:layout_constraintEnd_toStartOf="@+id/textViewDelete"
+        app:layout_constraintTop_toTopOf="@+id/textViewDelete" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

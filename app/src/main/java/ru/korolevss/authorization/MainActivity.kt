@@ -1,6 +1,5 @@
 package ru.korolevss.authorization
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import ru.korolevss.authorization.api.Token
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,33 +23,38 @@ class MainActivity : AppCompatActivity() {
         logInButton.setOnClickListener {
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
-            if (username == "" || password == "") {
+            if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show()
             } else {
                 lifecycleScope.launch {
-                    switchDeterminateBar(true)
-                    val response = Repository.authenticate(username, password)
-                    if (response.isSuccessful) {
-                        val token: Token? = response.body()
-                        savedToken(token, this@MainActivity)
+                    try {
+                        switchDeterminateBar(true)
+                        val response = Repository.authenticate(username, password)
+                        if (response.isSuccessful) {
+                            val token: Token? = response.body()
+                            savedToken(token, this@MainActivity)
+                            Toast.makeText(
+                                this@MainActivity,
+                                R.string.authorization_successful,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            startActivityIfAuthorized()
+                        } else {
+                            Toast.makeText(
+                                this@MainActivity,
+                                R.string.authorization_failed,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: IOException) {
                         Toast.makeText(
                             this@MainActivity,
-                            R.string.authorization_successful,
+                            R.string.connect_to_server_failed,
                             Toast.LENGTH_SHORT
                         ).show()
-                        val intent = Intent(
-                            this@MainActivity,
-                            FeedActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            R.string.authorization_failed,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    } finally {
+                        switchDeterminateBar(false)
                     }
-                    switchDeterminateBar(false)
                 }
             }
         }
@@ -66,9 +71,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startActivityIfAuthorized() {
-        if (isAuthorized(this)) {
+        val token = getToken(this)
+        if (!token.isNullOrEmpty()) {
+            Repository.createRetrofitWithAuth(token)
             val intent = Intent(this, FeedActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -78,8 +86,9 @@ class MainActivity : AppCompatActivity() {
             logInButton.isEnabled = false
             registrationButton.isEnabled = false
         } else {
-            determinateBarMain.visibility = View.GONE
+            determinateBarMain.isVisible = false
             logInButton.isEnabled = true
+            registrationButton.isEnabled = true
             determinateBarMain.isVisible = false
         }
     }

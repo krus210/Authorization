@@ -11,10 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistrationActivity"
-            android:label="@string/registration_activity_name"/>
-        <activity android:name=".FeedActivity"
-            android:label="@string/feed_activity_name"/>
+        <activity android:name=".CreatePostActivity"
+           android:label="@string/create_post_activity_name"  />
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="@string/registration_activity_name" />
+        <activity
+            android:name=".FeedActivity"
+            android:label="@string/feed_activity_name" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

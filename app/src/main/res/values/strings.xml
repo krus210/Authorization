@@ -14,4 +14,50 @@
     <string name="authorization_successful">Authorization successful</string>
     <string name="authorization_failed">Authorization failed</string>
     <string name="feed_activity_name">Feed</string>
+    <string name="connect_to_server_failed">Connect to server failed</string>
+    <string name="create_post_activity_name">Create new post</string>
+    <string name="enter_your_post_content">Enter your post content</string>
+    <string name="create">Create</string>
+    <string name="empty_text">Empty text</string>
+    <string name="create_post_failed">Create post failed</string>
+    <string name="create_post_is_successful">Creating post is successful</string>
+    <string name="text_of_post">First post in our network!</string>
+    <string name="date">20 august 2019</string>
+    <string name="two">2</string>
+    <string name="eight">8</string>
+    <string name="fifty">50</string>
+    <string name="netology">Netology</string>
+    <string name="post_text1">Это исследовательская задача, направленная на приобретение навыков
+        работы с документацией Android и анализа чужих приложений.
+        Пока мы сами не умеем проигрывать видео, но, как вы наверное догадались,
+        мы можем подключить другие приложения для его проигрывания.</string>
+    <string name="post_date1">February 19th, 2020</string>
+    <string name="name_author">Королев Станислав Сергеевич Королев Станислав Сергеевич
+        Сергеевич Королев Станислав Сергеевич Сергеевич Королев Станислав Сергеевич
+        Сергеевич Королев Станислав Сергеевич</string>
+    <string name="post_text2">Hi, there</string>
+    <string name="post_date2">March 1st, 2020</string>
+    <string name="post_text3">My name is Stas</string>
+    <string name="post_date3">March 3rd, 2020</string>
+    <string name="post_text4">Spring is coming!</string>
+    <string name="post_date4">March 4th, 2020</string>
+    <string name="snippet">snippet</string>
+    <string name="repost_from">Repost from:</string>
+    <string name="ad_post">Рекламная запись</string>
+    <string name="hi_from_jack">Hi from Jack!</string>
+    <string name="post_date5">8th of March, 2020</string>
+    <string name="post_text5">Whether on Google</string>
+    <string name="post_text10">Hi from Jack</string>
+    <string name="post_date10">7th of March, 2020</string>
+    <string name="name_author2">Lack Russel</string>
+    <string name="delete">Это не интересно</string>
+    <string name="put_comment">Put comment successful!</string>
+    <string name="loading_posts_failed">Loading posts failed</string>
+    <string name="loading_data_post_faled">Loading data of post failed</string>
+    <string name="like_is_performing">Like is performing</string>
+    <string name="share_is_performing">Share is performing</string>
+    <string name="cannot_repost_2_time">Can not repost second time</string>
+    <string name="repost">REPOST</string>
+    <string name="load_new_posts">Load new posts</string>
+    <string name="load_more_posts">Load more posts</string>
 </resources>

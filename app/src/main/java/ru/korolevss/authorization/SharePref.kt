@@ -21,14 +21,13 @@ fun savedToken(token: Token?, context: Context) {
     }
 }
 
-fun isAuthorized(context: Context): Boolean {
+fun getToken(context: Context): String? {
     val sharedPref = context.getSharedPreferences(
         sharedPrefKey,
         Context.MODE_PRIVATE
     )
-    val token =sharedPref.getString(
+    return sharedPref.getString(
         tokenKey,
         ""
     )
-    return !token.isNullOrEmpty()
 }
