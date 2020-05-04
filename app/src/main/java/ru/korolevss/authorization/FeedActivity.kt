@@ -1,16 +1,23 @@
 package ru.korolevss.authorization
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_create_post.*
 import kotlinx.android.synthetic.main.activity_feed.*
+import kotlinx.android.synthetic.main.item_load_after_fail.*
 import kotlinx.coroutines.launch
 import ru.korolevss.authorization.dto.PostModel
 import ru.korolevss.authorization.postadapter.PostAdapter
+import ru.korolevss.authorization.postadapter.PostDiffUtilCallback
 import java.io.IOException
 
 class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
@@ -25,11 +32,6 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
             startActivity(intent)
         }
 
-
-    }
-
-    override fun onStart() {
-        super.onStart()
         lifecycleScope.launch {
             try {
                 switchDeterminateBar(true)
@@ -64,6 +66,7 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
         swipeContainer.setOnRefreshListener {
             refreshData()
         }
+
     }
 
     private fun refreshData() {
@@ -73,16 +76,65 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
                 swipeContainer.isRefreshing = false
                 if (newData.isSuccessful) {
                     with (container) {
-                        (adapter as PostAdapter).newRecentPosts(newData.body()!!)
-                        adapter?.notifyDataSetChanged()
+                        try {
+                            val oldList = (adapter as PostAdapter).list
+                            val newList = newData.body()!! as MutableList<PostModel>
+                            val postDiffUtilCallback = PostDiffUtilCallback(oldList, newList)
+                            val postDiffResult = DiffUtil.calculateDiff(postDiffUtilCallback)
+                            (adapter as PostAdapter).newRecentPosts(newList)
+                            postDiffResult.dispatchUpdatesTo(adapter as PostAdapter)
+                        } catch (e: TypeCastException) {
+                            layoutManager = LinearLayoutManager(this@FeedActivity)
+                            adapter = PostAdapter(
+                                (newData.body() ?: emptyList()) as MutableList<PostModel>
+                            ).apply {
+                                likeBtnClickListener = this@FeedActivity
+                                repostBtnClickListener = this@FeedActivity
+                            }
+                        }
                     }
                 }
             } catch (e: IOException) {
-                Toast.makeText(
-                    this@FeedActivity,
-                    R.string.connect_to_server_failed,
-                    Toast.LENGTH_SHORT
-                ).show()
+                swipeContainer.isRefreshing = false
+                showDialogLoadAfterFail()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            1 -> if (resultCode == Activity.RESULT_OK) {
+                lifecycleScope.launch {
+                    try {
+                        switchDeterminateBar(true)
+                        val result = Repository.getRecent()
+                        if (result.isSuccessful) {
+                            with(container) {
+                                val oldList = (adapter as PostAdapter).list
+                                val newList = result.body()!! as MutableList<PostModel>
+                                val postDiffUtilCallback = PostDiffUtilCallback(oldList, newList)
+                                val postDiffResult = DiffUtil.calculateDiff(postDiffUtilCallback)
+                                (adapter as PostAdapter).newRecentPosts(newList)
+                                postDiffResult.dispatchUpdatesTo(adapter as PostAdapter)
+                            }
+                        } else {
+                            Toast.makeText(
+                                this@FeedActivity,
+                                R.string.loading_posts_failed,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: IOException) {
+                        Toast.makeText(
+                            this@FeedActivity,
+                            R.string.connect_to_server_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } finally {
+                        switchDeterminateBar(false)
+                    }
+                }
             }
         }
     }
@@ -159,6 +211,16 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
         } else {
             determinateBarFeed.isVisible = false
             fab.isEnabled = true
+        }
+    }
+
+    private fun showDialogLoadAfterFail() {
+        val dialog = AlertDialog.Builder(this)
+            .setView(R.layout.item_load_after_fail)
+            .show()
+        dialog.loadButtonAfterFail.setOnClickListener {
+            refreshData()
+            dialog.dismiss()
         }
     }
 }

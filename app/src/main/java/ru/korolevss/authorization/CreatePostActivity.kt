@@ -35,7 +35,7 @@ class CreatePostActivity : AppCompatActivity() {
                                 this@CreatePostActivity,
                                 FeedActivity::class.java
                             )
-                            startActivity(intent)
+                            startActivityForResult(intent, 1)
                             finish()
                         } else {
                             Toast.makeText(
