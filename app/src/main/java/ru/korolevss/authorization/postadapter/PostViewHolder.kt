@@ -4,13 +4,17 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_create_post.*
 import kotlinx.android.synthetic.main.post_card.view.*
 import ru.korolevss.authorization.R
+import ru.korolevss.authorization.api.AttachmentModel
+import ru.korolevss.authorization.api.AttachmentType
 import ru.korolevss.authorization.dto.PostModel
 
 open class PostViewHolder(
@@ -30,6 +34,10 @@ open class PostViewHolder(
             textViewRepostCount.text = post.repostsCount.toString()
             fillCount(textViewLikeCount, post.likesCount)
             fillCount(textViewRepostCount, post.repostsCount)
+            if (post.attachmentId != null) {
+                val attachmentModel = AttachmentModel(post.attachmentId, AttachmentType.IMAGE)
+                loadImage(photoImg, attachmentModel.url)
+            }
             when {
                 post.likeActionPerforming -> {
                     imageButtonLike.setImageResource(R.drawable.ic_like_blue)
@@ -129,6 +137,12 @@ open class PostViewHolder(
                 }
             }
         }
+    }
+
+    private fun loadImage(photoImg: ImageView, imageUrl: String) {
+        Glide.with(photoImg.context)
+            .load(imageUrl)
+            .into(photoImg)
     }
 
 }

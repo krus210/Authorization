@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_share_gray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        app:layout_constraintTop_toBottomOf="@+id/mediaContainer"
         android:layout_marginTop="@dimen/standard_margin"/>
 
     <TextView
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonShare"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        app:layout_constraintTop_toBottomOf="@+id/mediaContainer"
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/margin_gap_between_icons"
         tools:text="@string/eight" />
@@ -80,7 +80,7 @@
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/margin_between_text_and_icon"
         app:layout_constraintEnd_toStartOf="@+id/textViewRepostCount"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink" />
+        app:layout_constraintTop_toBottomOf="@+id/mediaContainer" />
 
     <TextView
         android:id="@+id/textViewLikeCount"
@@ -89,7 +89,7 @@
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/margin_gap_between_icons"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonRepost"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
+        app:layout_constraintTop_toBottomOf="@+id/mediaContainer"
         tools:text="@string/fifty"/>
 
     <ImageButton
@@ -100,18 +100,7 @@
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/margin_between_text_and_icon"
         app:layout_constraintEnd_toStartOf="@+id/textViewLikeCount"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink" />
-
-    <ImageButton
-        android:id="@+id/imageButtonLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@drawable/ic_location_on_black_24dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLike"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonLink"
-        android:layout_marginTop="@dimen/standard_margin"
-        android:layout_marginEnd="@dimen/margin_gap_between_icons"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toBottomOf="@+id/mediaContainer" />
 
     <TextView
         android:id="@+id/textViewSnippet"
@@ -127,15 +116,24 @@
         tools:text="@string/snippet"
         android:visibility="invisible"/>
 
-    <ImageButton
-        android:id="@+id/imageButtonLink"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/mediaContainer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPost"
-        android:layout_marginTop="@dimen/margin_between_text_and_icon"
-        android:visibility="gone"/>
+        android:layout_marginTop="@dimen/margin_between_text_and_icon">
+
+        <ImageView
+            android:id="@+id/photoImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            tools:src="@drawable/photo_youtube"
+            app:layout_constraintHeight_max="400dp" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textViewDelete"

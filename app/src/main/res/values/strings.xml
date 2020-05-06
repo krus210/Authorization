@@ -61,4 +61,10 @@
     <string name="load_new_posts">Load new posts</string>
     <string name="load_more_posts">Load more posts</string>
     <string name="try_else">try else</string>
+    <string name="photo_upload_failed">Photo upload failed</string>
+    <string name="photo_upload_is_successful">Photo upload is seccessful</string>
+    <string name="say_goodbye">Say goodbye</string>
+    <string name="description_text">Notifies when user leave app</string>
+    <string name="title_notification">Понравилось ли вам у нас?</string>
+    <string name="text_notification">Дорогой пользователь, возвращайтесь к нам скорее</string>
 </resources>

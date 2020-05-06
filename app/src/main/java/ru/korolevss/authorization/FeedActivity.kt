@@ -23,13 +23,17 @@ import java.io.IOException
 class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
     PostAdapter.OnRepostBtnClickListener {
 
+    private companion object {
+        const val CREATE_POST_REQUEST_CODE = 1
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
 
         fab.setOnClickListener {
             val intent = Intent(this, CreatePostActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, CREATE_POST_REQUEST_CODE)
         }
 
         lifecycleScope.launch {
@@ -104,7 +108,7 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            1 -> if (resultCode == Activity.RESULT_OK) {
+            CREATE_POST_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
                 lifecycleScope.launch {
                     try {
                         switchDeterminateBar(true)
@@ -221,6 +225,14 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
         dialog.loadButtonAfterFail.setOnClickListener {
             refreshData()
             dialog.dismiss()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isFirstTime(this)) {
+            NotificationHelper.sayGoodbye(this)
+            setNotFirstTime(this)
         }
     }
 }

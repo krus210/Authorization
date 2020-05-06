@@ -13,14 +13,27 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:hint="@string/enter_your_post_content"
-        android:layout_margin="@dimen/margin_create_post"
+        android:layout_marginStart="@dimen/margin_create_post"
+        android:layout_marginEnd="@dimen/margin_create_post"
+        android:layout_marginTop="@dimen/margin_create_post"
         android:gravity="top"/>
+
+    <ImageButton
+        android:id="@+id/addPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_add_a_photo_black"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/margin_create_post"
+        android:layout_marginTop="@dimen/margin_photo_image"
+        android:layout_marginBottom="@dimen/margin_photo_image"
+        />
 
     <Button
         android:id="@+id/createButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9"
+        android:layout_weight="4.5"
         android:text="@string/create"
         android:layout_marginStart="@dimen/margin_create_post"
         android:layout_marginEnd="@dimen/margin_create_post"

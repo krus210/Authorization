@@ -1,9 +1,11 @@
 package ru.korolevss.authorization.api
 
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 import ru.korolevss.authorization.dto.PostModel
 import ru.korolevss.authorization.dto.PostRequestDto
+
 
 interface API {
     @POST("api/v1/authentication")
@@ -38,4 +40,9 @@ interface API {
 
     @GET("api/v1/posts/{id}/get-posts-before")
     suspend fun getPostsBefore(@Path("id") id: Long): Response<List<PostModel>>
+
+    @Multipart
+    @POST("api/v1/media")
+    suspend fun uploadImage(@Part file: MultipartBody.Part):
+            Response<AttachmentModel>
 }

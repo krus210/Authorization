@@ -13,4 +13,5 @@
     <dimen name="size_date">10sp</dimen>
     <dimen name="margin_beyond_text_and_avatar_photo">24dp</dimen>
     <dimen name="margin_between_date_and_name_author">10dp</dimen>
+    <dimen name="margin_photo_image">10dp</dimen>
 </resources>
