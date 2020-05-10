@@ -5,16 +5,24 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_create_post.*
 import kotlinx.android.synthetic.main.activity_feed.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_load_after_fail.*
+import kotlinx.android.synthetic.main.item_token_after_fail.*
 import kotlinx.coroutines.launch
+import ru.korolevss.authorization.api.Token
 import ru.korolevss.authorization.dto.PostModel
 import ru.korolevss.authorization.postadapter.PostAdapter
 import ru.korolevss.authorization.postadapter.PostDiffUtilCallback
@@ -30,6 +38,8 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
+
+        requestToken()
 
         fab.setOnClickListener {
             val intent = Intent(this, CreatePostActivity::class.java)
@@ -79,7 +89,7 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
                 val newData = Repository.getRecent()
                 swipeContainer.isRefreshing = false
                 if (newData.isSuccessful) {
-                    with (container) {
+                    with(container) {
                         try {
                             val oldList = (adapter as PostAdapter).list
                             val newList = newData.body()!! as MutableList<PostModel>
@@ -233,6 +243,51 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnLikeBtnClickListener,
         if (isFirstTime(this)) {
             NotificationHelper.sayGoodbye(this)
             setNotFirstTime(this)
+        }
+    }
+
+    private fun requestToken() {
+        with(GoogleApiAvailability.getInstance()) {
+            val code = isGooglePlayServicesAvailable(this@FeedActivity)
+            if (code == ConnectionResult.SUCCESS) {
+                return@with
+            }
+
+            if (isUserResolvableError(code)) {
+                getErrorDialog(this@FeedActivity, code, 9000).show()
+                return
+            }
+
+            Snackbar.make(
+                constraint_feed,
+                getString(R.string.google_play_unavailable),
+                Snackbar.LENGTH_LONG
+            ).show()
+            return
+        }
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+            lifecycleScope.launch {
+                Log.i("token", it.token)
+                val token = Token(it.token)
+                try {
+                    val response = Repository.firebasePushToken(token)
+                    if (!response.isSuccessful) {
+                        showDialogTokenAfterFail()
+                    }
+                } catch (e: IOException) {
+                    showDialogTokenAfterFail()
+                }
+            }
+        }
+    }
+
+    private fun showDialogTokenAfterFail() {
+        val dialog = AlertDialog.Builder(this)
+            .setView(R.layout.item_token_after_fail)
+            .show()
+        dialog.tokenButtonAfterFail.setOnClickListener {
+            requestToken()
+            dialog.dismiss()
         }
     }
 }

@@ -67,4 +67,6 @@
     <string name="description_text">Notifies when user leave app</string>
     <string name="title_notification">Понравилось ли вам у нас?</string>
     <string name="text_notification">Дорогой пользователь, возвращайтесь к нам скорее</string>
+    <string name="google_play_unavailable">Google play unavailable</string>
+    <string name="push_token_on_server_failed">Push token on server failed</string>
 </resources>

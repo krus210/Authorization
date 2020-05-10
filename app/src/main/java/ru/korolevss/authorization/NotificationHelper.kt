@@ -38,9 +38,21 @@ object NotificationHelper {
             .setContentTitle(context.getString(R.string.title_notification))
             .setContentText(context.getString(R.string.text_notification))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            builder.priority = NotificationManager.IMPORTANCE_HIGH
+
+        with (NotificationManagerCompat.from(context)) {
+            val notificationId = Random().nextInt(100000)
+            lastNotificationId = notificationId
+            notify(notificationId, builder.build())
         }
+    }
+
+    fun notifyFromFCM(context: Context, title: String) {
+        createNotificationChannelIfNotCreated(context)
+        val builder = NotificationCompat.Builder(context, UPLOAD_CHANEL_ID)
+            .setSmallIcon(R.drawable.ic_app_foreground)
+            .setContentTitle(title)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
         with (NotificationManagerCompat.from(context)) {
             val notificationId = Random().nextInt(100000)
             lastNotificationId = notificationId

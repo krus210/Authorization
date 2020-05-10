@@ -1,5 +1,6 @@
 package ru.korolevss.authorization
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +8,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.iid.FirebaseInstanceId
+import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_load_after_fail.*
+import kotlinx.android.synthetic.main.item_token_after_fail.*
 import kotlinx.coroutines.*
 import ru.korolevss.authorization.api.Token
 import java.io.IOException

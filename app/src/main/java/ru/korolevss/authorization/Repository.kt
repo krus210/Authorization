@@ -11,10 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.korolevss.authorization.api.API
-import ru.korolevss.authorization.api.AttachmentModel
-import ru.korolevss.authorization.api.AuthRequestParams
-import ru.korolevss.authorization.api.InjectAuthTokenInterceptor
+import ru.korolevss.authorization.api.*
 import ru.korolevss.authorization.dto.PostModel
 import ru.korolevss.authorization.dto.PostRequestDto
 import ru.korolevss.authorization.dto.PostType
@@ -93,5 +90,7 @@ object Repository {
             MultipartBody.Part.createFormData("file", "image.jpg", reqFIle)
         return api.uploadImage(body)
     }
+
+    suspend fun firebasePushToken(token: Token): Response<Void> = api.firebasePushToken(token)
 
 }

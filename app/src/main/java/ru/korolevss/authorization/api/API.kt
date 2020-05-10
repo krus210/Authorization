@@ -45,4 +45,8 @@ interface API {
     @POST("api/v1/media")
     suspend fun uploadImage(@Part file: MultipartBody.Part):
             Response<AttachmentModel>
+
+    @POST("api/v1/firebase-token")
+    suspend fun firebasePushToken(@Body token: Token): Response<Void>
+
 }
