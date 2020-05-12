@@ -2,7 +2,6 @@ package ru.korolevss.authorization
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,9 +15,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.iid.FirebaseInstanceId
-import kotlinx.android.synthetic.main.activity_create_post.*
 import kotlinx.android.synthetic.main.activity_feed.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_load_after_fail.*
 import kotlinx.android.synthetic.main.item_token_after_fail.*
 import kotlinx.coroutines.launch
